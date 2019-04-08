@@ -34,7 +34,6 @@
       method: "GET",
       url: "/saved/" + thisId
     })
-      // With that done, add the note information to the page
       .then(function(data) {
         // console.log(data);
         $("#notes").append("<h4>" + data.title + "</h4>");
@@ -42,11 +41,8 @@
         $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
         $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
   
-        // If there's a note in the article
         if (data.note) {
-          // Place the title of the note in the title input
           $("#titleinput").val(data.note.title);
-          // Place the body of the note in the body textarea
           $("#bodyinput").val(data.note.body);
         }
       });
@@ -75,6 +71,11 @@
 
   $(document).on("click", "#save", function() {
     var thisId = $(this).attr("data-id");
+    console.log($(this));
+    var element = $(this);
+    // element.classList.remove('btn-info');
+    // element.classList.add('btn-warning');
+    element.innerHTML = "Saved";
 
     $.ajax({
       method: "GET",
@@ -90,10 +91,7 @@
         }
       }).then(function() {
         console.log("Article saved successfully!");
-        var element = document.getElementById("save");
-        element.classList.remove('btn-info');
-        element.classList.add('btn-warning');
-        element.innerHTML = "Saved";
+
       })
     })
   })
@@ -121,6 +119,6 @@
       url: "/saved/" + thisId,
     }).then(function() {
       console.log("Article removed!")
-      
+
     })
   })
